@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+install:
+  - echo "nothing needs to be installed"
+before_script:
+  - echo "no tests"
+
+script:
+    ## comment
+  - docker --version 
+  - docker build -t udagram-frontend .
+  - docker tag udagram-frontend grandia3/udagram-frontend:latest
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push grandia3/udagram-frontend
